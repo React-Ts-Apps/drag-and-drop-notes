@@ -21,15 +21,11 @@ const DragNotes = () => {
     };
     const handleMouseMove = (e: MouseEvent) => {
       if (!noteRef.current) return;
-      noteRef.current = {
-        ...noteRef.current,
-        offsetX: e.clientX,
-        offsetY: e.clientY,
-      };
+
       setNotes((prevNotes) =>
         prevNotes.map((note) =>
           note.id === noteRef.current?.id
-            ? { ...note, x: e.clientX, y: e.clientY }
+            ? { ...note, x: e.clientX - noteRef.current.offsetX, y: e.clientY - noteRef.current.offsetY }
             : note
         )
       );
