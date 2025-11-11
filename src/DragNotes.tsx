@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 type DragData = {
   id: number;
@@ -6,51 +6,89 @@ type DragData = {
   offsetY: number;
 } | null;
 
-const initialNotes = [
-  { id: 1, content: "Hardwork is key of success", x: 50, y: 50 },
-  { id: 2, content: "Set your goals", x: 150, y: 150 },
-  { id: 3, content: "Divide goal as subgoals", x: 250, y: 250 },
-];
+type Note = {
+  id: number;
+  title: string;
+  content: string;
+  x: number;
+  y: number;
+}
+
+
 const DragNotes = () => {
-  const [notes, setNotes] = useState(initialNotes);
-  const noteRef = useRef<DragData>(null);
+  const [notes, setNotes] = useState<Note[]>([{ id: 1, content: '', title: '', x: 50, y: 50 }]);
+  const [currentNote, setCurrentNote] = useState<DragData>(null);
 
   useEffect(() => {
     const handleMouseUp = () => {
-      noteRef.current = null;
-    };
+      setCurrentNote(null);
+    }
+
     const handleMouseMove = (e: MouseEvent) => {
-      if (!noteRef.current) return;
+      if (!currentNote) return;
 
       setNotes((prevNotes) =>
         prevNotes.map((note) =>
-          note.id === noteRef.current?.id
-            ? { ...note, x: e.clientX - noteRef.current.offsetX, y: e.clientY - noteRef.current.offsetY }
+          note.id === currentNote.id
+            ? { ...note, x: e.clientX - currentNote.offsetX, y: e.clientY - currentNote.offsetY }
             : note
         )
       );
-    };
+    }
+
     window.addEventListener("mousemove", handleMouseMove);
     window.addEventListener("mouseup", handleMouseUp);
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mouseup", handleMouseUp);
-    };
-  });
+    }
+  })
 
   const handleMouseDown = (e: React.MouseEvent, id: number) => {
     const noteElement = e.currentTarget;
     const rect = noteElement.getBoundingClientRect();
-    noteRef.current = {
+    setCurrentNote({
       id,
       offsetX: e.clientX - rect.left,
       offsetY: e.clientY - rect.top,
-    };
-  };
+    })
+  }
+
+  const addNewNote = () => {
+    const randomX = Math.random() * (window.innerWidth - 250)
+    const randomY = Math.random() * (window.innerHeight - 250)
+    setNotes((prev) => [...prev, { id: notes.length + 1, title: '', content: '', x: randomX, y: randomY }])
+  }
+
+  const handleChange = (id: number, field: "title" | "content", value: string) => {
+    setNotes((prev) => prev.map((note) => note.id === id ? { ...note, [field]: value } : note))
+  }
+
 
   return (
-    <div>
+    <div style={{
+      position: "relative",
+      width: "100vw",
+      height: "100vh",
+      overflow: "hidden",
+    }}>
+      <button style={{
+        position: "absolute",
+        top: 10,
+        left: "50%",
+        transform: "translateX(-50%)",
+        backgroundColor: "olive",
+        color: "white",
+        fontWeight: "bold",
+        padding: "10px 20px",
+        borderRadius: 8,
+        cursor: "pointer",
+      }}
+        onClick={addNewNote}>
+        Add New Note
+      </button>
+
       {notes.map((note) => (
         <div
           onMouseDown={(e) => handleMouseDown(e, note.id)}
@@ -58,15 +96,42 @@ const DragNotes = () => {
             position: "absolute",
             top: note.y,
             left: note.x,
-            backgroundColor: "olive",
+            backgroundColor: 'orange',
             color: "white",
             padding: 20,
-            height: 30,
+            height: 150,
             cursor: "crosshair",
+            display: "flex",
+            flexDirection: "column"
           }}
           key={note.id}
         >
-          {note.content}
+          <input placeholder="Enter title"
+            value={note.title}
+            style={{
+              borderTop: "none",
+              borderLeft: "none",
+              borderRight: "none",
+              outline: "none",
+              background: "transparent",
+              fontWeight: "bold",
+              marginBottom: 5
+            }}
+            onChange={(e) => handleChange(note.id, "title", e.target.value)}
+          />
+
+          <textarea placeholder="Write something...." value={note.content}
+            style={{
+              border: "none",
+              outline: "none",
+              background: "transparent",
+              padding: 5,
+              flex: 1,
+              overflow: "hidden"
+            }}
+            onChange={(e) =>
+              handleChange(note.id, "content", e.target.value)}
+            onMouseDown={(e) => e.stopPropagation()} />
         </div>
       ))}
     </div>
