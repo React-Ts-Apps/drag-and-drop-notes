@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Trash2 } from "lucide-react";
 
 type DragData = {
   id: number;
@@ -65,6 +66,10 @@ const DragNotes = () => {
     setNotes((prev) => prev.map((note) => note.id === id ? { ...note, [field]: value } : note))
   }
 
+  const deleteNote = (id: number) => {
+    setNotes((prev) => prev.filter((note) => note.id !== id))
+  }
+
 
   return (
     <div style={{
@@ -77,7 +82,6 @@ const DragNotes = () => {
         position: "absolute",
         top: 10,
         left: "50%",
-        transform: "translateX(-50%)",
         backgroundColor: "olive",
         color: "white",
         fontWeight: "bold",
@@ -106,20 +110,25 @@ const DragNotes = () => {
           }}
           key={note.id}
         >
-          <input placeholder="Enter title"
-            value={note.title}
-            style={{
-              borderTop: "none",
-              borderLeft: "none",
-              borderRight: "none",
-              outline: "none",
-              background: "transparent",
-              fontWeight: "bold",
-              marginBottom: 5
-            }}
-            onChange={(e) => handleChange(note.id, "title", e.target.value)}
-          />
-
+          <div>
+            <input placeholder="Enter title"
+              value={note.title}
+              style={{
+                borderTop: "none",
+                borderLeft: "none",
+                borderRight: "none",
+                outline: "none",
+                background: "transparent",
+                fontWeight: "bold",
+                marginBottom: 5
+              }}
+              onChange={(e) => handleChange(note.id, "title", e.target.value)}
+            />
+            <Trash2 color="red" size={20} onClick={() => deleteNote(note.id)}
+              style={{
+                cursor: "pointer"
+              }} />
+          </div>
           <textarea placeholder="Write something...." value={note.content}
             style={{
               border: "none",
