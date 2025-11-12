@@ -57,11 +57,19 @@ const NotesBoard = () => {
         })
     }
 
+    const deleteNote = (id: number) => {
+        setNotes(prev => prev.filter(note => note.id !== id))
+    }
+
     return (
         <div className="notes-board">
             <AddNoteButton onAddNote={addNote} />
             {notes.map((note) => (
-                <Note key={note.id} note={note} onChange={handleChange} onMouseDown={handleMouseDown} />
+                <Note key={note.id} note={note}
+                    onChange={handleChange}
+                    onMouseDown={handleMouseDown}
+                    deleteNote={deleteNote}
+                />
             ))}
         </div>
     )
