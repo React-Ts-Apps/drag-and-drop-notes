@@ -2,9 +2,10 @@ import { useEffect, useState } from "react"
 import AddNoteButton from "./AddNoteButton"
 import Note from "./Note"
 import { NotePositionProps, NoteProps } from "../../types/notes"
+import { COLORS } from "../../constants/constants"
 
 const initialNotes = [{
-    id: 1, title: '', content: '', x: 150, y: 150
+    id: 1, title: '', content: '', x: 150, y: 150, color: "#FFD966"
 }]
 
 const NotesBoard = () => {
@@ -34,9 +35,11 @@ const NotesBoard = () => {
     })
 
     const addNote = () => {
-        const randomX = Math.random() * (window.innerWidth - 250)
-        const randomY = Math.random() * (window.innerHeight - 250)
-        setNotes(prev => [...prev, { id: notes.length + 1, title: '', content: '', x: randomX, y: randomY }])
+        const randomX = Math.floor(Math.random() * (window.innerWidth - 250))
+        const randomY = Math.floor(Math.random() * (window.innerHeight - 250))
+        const randomColor = COLORS[Math.floor(Math.random() * COLORS.length)];
+
+        setNotes(prev => [...prev, { id: notes.length + 1, title: '', content: '', x: randomX, y: randomY, color: randomColor }])
     }
 
     const handleChange = (id: number, field: 'title' | 'content', value: string) => {

@@ -40,7 +40,6 @@
 
 .sticky-note {
     position: absolute;
-    background-color: lightpink;
     cursor: crosshair;
     display: flex;
     flex-direction: column;

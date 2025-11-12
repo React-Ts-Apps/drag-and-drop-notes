@@ -4,6 +4,7 @@ export type NoteProps = {
     content: string;
     x: number;
     y: number;
+    color: string;
 }
 
 export type NotePositionProps = {

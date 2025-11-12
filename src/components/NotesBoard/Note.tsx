@@ -5,7 +5,8 @@ const Note = ({ note, onChange, onMouseDown }: NoteItemProps) => {
         <div className="sticky-note"
             style={{
                 top: note.y,
-                left: note.x
+                left: note.x,
+                backgroundColor: note.color
             }}
             onMouseDown={(e) => onMouseDown(e, note.id)}
         >
