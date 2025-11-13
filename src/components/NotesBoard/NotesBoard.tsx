@@ -3,17 +3,14 @@ import AddNoteButton from "./AddNoteButton"
 import Note from "./Note"
 import { NotePositionProps, NoteProps } from "../../types/notes"
 import { COLORS } from "../../constants/constants"
+import { useLocalStorage } from "../../hooks/useLocalStorage"
 
 const initialNotes = [{
     id: 1, title: 'Why you are here...', content: 'Sticky thoughts for a busy mind !!', x: 150, y: 150, color: "#FFD966"
 }]
 
 const NotesBoard = () => {
-    const [notes, setNotes] = useState<NoteProps[]>(() => {
-        const saved = localStorage.getItem('notes')
-        const parsed = saved ? JSON.parse(saved) : []
-        return parsed.length ? parsed : initialNotes
-    })
+    const [notes, setNotes] = useLocalStorage<NoteProps[]>('notes', initialNotes)
     const [currentNote, setCurrentNote] = useState<NotePositionProps>(null)
 
     useEffect(() => {
@@ -26,10 +23,6 @@ const NotesBoard = () => {
             window.removeEventListener("mouseup", handleMouseUp)
         }
     })
-
-    useEffect(() => {
-        localStorage.setItem('notes', JSON.stringify(notes))
-    }, [notes])
 
     const handleMouseUp = () => {
         setCurrentNote(null)
