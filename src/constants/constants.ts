@@ -13,3 +13,6 @@ export const COLORS = [
     "#FFD1DC", // light rose
 ];
 
+export const INITIAL_NOTES = [{
+    id: 1, title: 'Why you are here...', content: 'Sticky thoughts for a busy mind !!', x: 150, y: 150, color: "#FFD966"
+}]

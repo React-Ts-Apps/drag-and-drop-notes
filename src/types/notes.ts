@@ -14,7 +14,7 @@ export type NotePositionProps = {
 } | null
 
 export type AddNoteProps = {
-    onAddNote: () => void;
+    addNote: () => void;
 }
 
 export type DeleteButtonProps = {
@@ -25,7 +25,7 @@ export type DeleteButtonProps = {
 
 export type NoteItemProps = {
     note: NoteProps;
-    onChange: (id: number, field: 'title' | 'content', value: string) => void;
-    onMouseDown: (e: React.MouseEvent, id: number) => void;
+    updateNote: (id: number, field: 'title' | 'content', value: string) => void;
+    startDrag: (e: React.MouseEvent, id: number) => void;
     deleteNote: (id: number) => void;
 }
