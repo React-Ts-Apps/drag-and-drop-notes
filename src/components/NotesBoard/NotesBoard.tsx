@@ -6,6 +6,7 @@ import { useNotes } from "../../hooks/useNotes"
 import { useDrag } from "../../hooks/useDrag"
 import { INITIAL_NOTES } from "../../constants/constants"
 
+
 const NotesBoard = () => {
     const [notes, setNotes] = useLocalStorage<NoteProps[]>('notes', INITIAL_NOTES)
     const { addNote, deleteNote, updateNote, moveNote } = useNotes(notes, setNotes)
@@ -13,7 +14,10 @@ const NotesBoard = () => {
 
     return (
         <div className="notes-board">
-            <AddNoteButton addNote={addNote} />
+            <div className="left-toolbar">
+                <AddNoteButton addNote={addNote} />
+            </div>
+
             {notes.map((note) => (
                 <Note key={note.id} note={note}
                     updateNote={updateNote}
