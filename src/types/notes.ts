@@ -25,7 +25,7 @@ export type DeleteButtonProps = {
 
 export type NoteItemProps = {
     note: NoteProps;
-    updateNote: (id: number, field: 'title' | 'content', value: string) => void;
+    updateNote: (id: number, field: 'title' | 'content' | 'color', value: string) => void;
     startDrag: (e: React.MouseEvent, id: number) => void;
     deleteNote: (id: number) => void;
 }

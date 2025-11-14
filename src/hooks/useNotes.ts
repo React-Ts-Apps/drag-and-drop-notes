@@ -16,7 +16,7 @@ export function useNotes(notes: NoteProps[], setNotes: React.Dispatch<React.SetS
         setNotes((prev) => prev.filter(note => note.id !== id))
     }
 
-    const updateNote = (id: number, field: "title" | "content", value: string) => {
+    const updateNote = (id: number, field: "title" | "content" | "color", value: string) => {
         setNotes((prev) => prev.map(note => note.id === id ? { ...note, [field]: value } : note))
     }
 

@@ -1,4 +1,5 @@
 
+import { Palette } from "lucide-react"
 import { NoteItemProps } from "../../types/notes"
 import DeleteButton from "../ui/DeleteButton"
 
@@ -12,20 +13,29 @@ const Note = ({ note, updateNote, startDrag, deleteNote }: NoteItemProps) => {
             }}
             onMouseDown={(e) => startDrag(e, note.id)}
         >
-            <div>
-                <input placeholder="Enter title"
-                    value={note.title}
-                    className="note-title"
-                    onChange={(e) => updateNote(note.id, "title", e.target.value)}
-                />
-                <DeleteButton color="red" size={15} onClick={() => deleteNote(note.id)} />
-            </div>
 
-            <textarea placeholder="Write something...." value={note.content}
+            <input name="title" placeholder="Enter title"
+                value={note.title}
+                className="note-title"
+                onChange={(e) => updateNote(note.id, "title", e.target.value)}
+            />
+
+            <textarea name="content" placeholder="Write something...." value={note.content}
                 className="note-content"
                 onChange={(e) =>
                     updateNote(note.id, "content", e.target.value)}
                 onMouseDown={(e) => e.stopPropagation()} />
+
+            <div className="note-toolbar">
+                <label className="color-palette-btn" onMouseDown={(e) => e.stopPropagation()}>
+                    <Palette size={15} />
+                    <input type="color"
+                        onChange={(e) => updateNote(note.id, "color", e.target.value)}
+                    />
+                </label>
+                <DeleteButton color="red" size={15} onClick={() => deleteNote(note.id)} />
+
+            </div>
         </div>
     )
 }

@@ -14,5 +14,11 @@ export const COLORS = [
 ];
 
 export const INITIAL_NOTES = [{
-    id: 1, title: 'Why you are here...', content: 'Sticky thoughts for a busy mind !!', x: 150, y: 150, color: "#FFD966"
+    id: 1, title: 'Why you are here...', content: 'Sticky thoughts for a busy mind !!', x: 500, y: 4, color: "#FFD966"
+},
+{
+    id: 2, title: 'Todays Goal', content: 'Add notes, Drag them and fill the board!!', x: 550, y: 300, color: "#FBE7C6"
+},
+{
+    id: 3, title: 'Success key', content: 'Hard work is the key to success!!', x: 200, y: 400, color: "#C7CEEA"
 }]
